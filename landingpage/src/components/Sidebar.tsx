@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Scroll, Users, Sparkles, Book, Feather, Wand2, Crown, Terminal } from 'lucide-react';
-import { Player } from '../types/types';
+import { GAME_COMPLETED_EVENT, Player, PLAYER_ENTER_EVENT, PLAYER_EXIT_EVENT, PLAYER_WON_EVENT } from '../types/types';
+import WebSocketComponent from './WebSocket';
 
 
 interface SidebarProps {
@@ -25,82 +26,112 @@ export default function Sidebar({
     onEndpointChange,
     onSendEvent,
     currentPlayer,
-    onPlayerChange
+    onPlayerChange,
 }: SidebarProps) {
-    const [terminalMessages, setTerminalMessages] = React.useState<string[]>([]);
-    const terminalRef = useRef<HTMLDivElement>(null);
-    const wsRef = useRef<WebSocket | null>(null);
-
-    useEffect(() => {
-        const wsEndpoint = endpoint
-            .replace(/^http(s)?:\/\//, (match, secure) => secure ? 'wss://' : 'ws://')
-            .replace(/\/readyagentone$/, '');
-        wsRef.current = new WebSocket(wsEndpoint);
-
-        wsRef.current.onmessage = (event) => {
-            try {
-                const data = JSON.parse(event.data);
-                if (data.action) {
-                    setTerminalMessages(prev => [...prev, data.message || JSON.stringify(data)]);
-
-                    // Auto scroll to bottom
-                    if (terminalRef.current) {
-                        terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-                    }
-                }
-            } catch (error) {
-                console.error('WebSocket message parsing error:', error);
-            }
-        };
-
-        wsRef.current.onerror = (error) => {
-            setTerminalMessages(prev => [...prev, `WebSocket Error: ${error.type}`]);
-        };
-
-        return () => {
-            if (wsRef.current) {
-                wsRef.current.close();
-            }
-        };
-    }, [endpoint]);
+    const [chatStatus, setChatStatus] = useState('');
+    const [wsStatus, setWsStatus] = useState('');
 
     const handlePlayerEnter = () => {
         onSendEvent({
-            text: "WORLD_EVENT",
+            text: 'WORLD_EVENT',
             event: PLAYER_ENTER_EVENT,
-            eventData: currentPlayer
+            eventData: currentPlayer,
         });
     };
 
     const handlePlayerExit = () => {
         onSendEvent({
-            text: "WORLD_EVENT",
+            text: 'WORLD_EVENT',
             event: PLAYER_EXIT_EVENT,
-            eventData: currentPlayer
+            eventData: currentPlayer,
         });
     };
 
     const handlePlayerWon = () => {
         onSendEvent({
-            text: "WORLD_EVENT",
+            text: 'WORLD_EVENT',
             event: PLAYER_WON_EVENT,
             eventData: {
                 player: currentPlayer,
                 score: 100,
-                game: "Sample Game"
-            }
+                game: 'Sample Game',
+            },
         });
     };
 
     const handleGameCompleted = () => {
         onSendEvent({
-            text: "WORLD_EVENT",
+            text: 'WORLD_EVENT',
             event: GAME_COMPLETED_EVENT,
             eventData: {
                 rank: [currentPlayer],
-                game: "Sample Game",
-                duration: 300
-            }
+                game: 'Sample Game',
+                duration: 300,
+            },
+        });
+    };
+
+    const setLocalEndpoint = async () => {
+        const chatEndpoint = 'http://localhost:3000/readyagentone';
+        const wsEndpoint = 'ws://localhost:3000';
+        setChatStatus('Pending...');
+        setWsStatus('Pending...');
+        const chatConnected = await validateEndpoint(chatEndpoint);
+        const wsConnected = await validateWebSocket(wsEndpoint);
+        onEndpointChange(chatEndpoint);
+        if (chatConnected) {
+            setChatStatus('Chat connected successfully');
+        } else {
+            setChatStatus('Failed to connect to chat');
+        }
+        if (wsConnected) {
+            setWsStatus('WebSocket connected successfully');
+        } else {
+            setWsStatus('Failed to connect to WebSocket');
+        }
+    };
+
+    const setDeployedEndpoint = async () => {
+        const chatEndpoint = 'https://readyagentone-production.up.railway.app/readyagentone';
+        const wsEndpoint = 'wss://readyagentone-production.up.railway.app';
+        setChatStatus('Pending...');
+        setWsStatus('Pending...');
+        const chatConnected = await validateEndpoint(chatEndpoint);
+        const wsConnected = await validateWebSocket(wsEndpoint);
+        onEndpointChange(chatEndpoint);
+        if (chatConnected) {
+            setChatStatus('Chat connected successfully');
+        } else {
+            setChatStatus('Failed to connect to chat');
+        }
+        if (wsConnected) {
+            setWsStatus('WebSocket connected successfully');
+        } else {
+            setWsStatus('Failed to connect to WebSocket');
+        }
+    };
+
+    const validateEndpoint = async (url: string) => {
+        try {
+            const response = await fetch(url, { method: 'POST', body: null });
+            return response.status === 200;
+        } catch (error) {
+            return false;
+        }
+    };
+
+    const validateWebSocket = (url: string) => {
+        return new Promise((resolve) => {
+            const ws = new WebSocket(url);
+            ws.onopen = () => {
+                console.log('WebSocket connected');
+                ws.close();
+                resolve(true);
+            };
+            ws.onerror = () => {
+                console.error('WebSocket connection error');
+                resolve(false);
+            };
         });
     };
 
@@ -117,13 +148,24 @@ export default function Sidebar({
                         <Scroll className="w-4 h-4" />
                         Ethereal Gateway
                     </label>
-                    <input
-                        type="text"
-                        value={endpoint}
-                        onChange={(e) => onEndpointChange(e.target.value)}
-                        className="w-full px-3 py-2 ancient-input text-purple-100 ancient-text"
-                        placeholder="https://readyagentone-production.up.railway.app/readyagentone"
-                    />
+                    <div className="flex space-x-2">
+                        <button
+                            onClick={setLocalEndpoint}
+                            className="w-full flex items-center justify-center gap-2 px-4 py-2 ancient-button text-purple-300"
+                        >
+                            Local
+                        </button>
+                        <button
+                            onClick={setDeployedEndpoint}
+                            className="w-full flex items-center justify-center gap-2 px-4 py-2 ancient-button text-purple-300"
+                        >
+                            Deployed
+                        </button>
+                    </div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                        <p>{chatStatus}</p>
+                        <p>{wsStatus}</p>
+                    </div>
                 </div>
 
                 <div className="space-y-2">
@@ -175,23 +217,7 @@ export default function Sidebar({
                     </button>
                 </div>
 
-                <div className="flex-1 space-y-2 mt-6">
-                    <label className="flex items-center gap-2 text-sm rune-text text-purple-400">
-                        <Terminal className="w-4 h-4" />
-                        Terminal
-                    </label>
-                    <div className="terminal-ascii-art">{MAGIC_ASCII_ART}</div>
-                    <div
-                        ref={terminalRef}
-                        className="flex-1 ancient-input h-60 overflow-y-auto p-3 text-sm font-mono text-purple-100"
-                    >
-                        {terminalMessages.map((msg, index) => (
-                            <div key={index} className="mb-1 break-words">
-                                ⋆｡°✩ {msg}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <WebSocketComponent endpoint={endpoint} />
             </div>
         </div>
     );
