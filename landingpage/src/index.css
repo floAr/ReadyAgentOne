@@ -137,8 +137,6 @@ select {
     }
 }
 
-.playful-hover:hover label {}
-
 .playful-hover:hover p {
     color: white;
 }
@@ -160,9 +158,6 @@ select {
     transform: translateY(-5px) scale(1.02);
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=EB+Garamond:wght@400;500&display=swap');
 

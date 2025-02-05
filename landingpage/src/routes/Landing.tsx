@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { MouseParallaxContainer, MouseParallaxChild } from 'react-parallax-mouse';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { Bot, Code2 } from 'lucide-react';
+import { Bot, Code2, Zap } from 'lucide-react';
 
 import imgUrl from '@content/agent.png';
 import backgroundUrl from '@content/nifty.png';
 import { link } from 'framer-motion/client';
+import Card from '../components/Card';
 
 function Landing() {
   const parallaxClose = 0.01;
@@ -78,83 +79,49 @@ function Landing() {
               className="space-y-8 lg:col-span-2 "
             >
               <MouseParallaxChild factorX={parallaxClose} factorY={parallaxFar} className="relative -translate-y-6 left-10">
-                <div className="relative   playful-hover">
+                <Card icon={Bot} title=" Reference Agent: Wizmar Q. Nimbleshanks" links={[
+                  { href: "https://github.com/floAr/ReadyAgentOne/tree/main/agent/agent", label: "Github Agent" },
+                  { href: "https://github.com/gtspencer/agentkit/tree/master/typescript/agentkit/src/action-providers/superfluid", label: "Github Superfluid Action" },
 
-                  <div className="rounded-2xl p-6 bg-white dark:bg-[#2d2d2f] shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(0,0,0,0.2)]">
-                    <label className="flex items-center text-lg mb-3 text-gray-800 dark:text-white">
-                      <Bot className="mr-2" /> Reference Agent: Wizmar Q. Nimbleshanks
-                    </label>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                      We created a reference agent using the ReadyAgentOne framework and  <a href="https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
-                        NiftyIsland 🔗</a>. The agent lives on an island ingame and will give players small quests upon speaking to him. By completing a quest the player earns the right to receive $ISLAND token streamed to their wallet
-                      using <a href="https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
-                        Superfluid 🔗</a>.<br />
-                      We enabled this by creating and adding a new action type to the Coinbase Agentkit to allow the agent to interact with the Superfluid protocol.<br />
-                      TODO: Add more details about the agent and the framework.
-
-                      <div className="flex space-x-4 justify-around mt-2">
-                        <a href="https://github.com/floAr/ReadyAgentOne/tree/main/agent/agent" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
-                          Github Agent 🔗
-                        </a>
-                        <a href="https://github.com/gtspencer/agentkit/tree/master/typescript/agentkit/src/action-providers/superfluid" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
-                          Github Superfluid Action 🔗
-                        </a>
-                      </div>
-                    </p>
-                  </div>
-                </div>
+                ]} >
+                  We created a reference agent using the ReadyAgentOne framework and  <a href="https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
+                    NiftyIsland 🔗</a>. The agent lives on an island ingame and will give players small quests upon speaking to him. By completing a quest the player earns the right to receive $ISLAND token streamed to their wallet
+                  using <a href="https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
+                    Superfluid 🔗</a>.<br />
+                  We enabled this by creating and adding a new action type to the Coinbase Agentkit to allow the agent to interact with the Superfluid protocol.<br />
+                  TODO: Add more details about the agent and the framework.</Card>
               </MouseParallaxChild>
 
               <MouseParallaxChild factorX={parallaxMid} factorY={parallaxMid} className="relative translate-y-6 right-10">
-                <div className="relative   playful-hover">
 
-                  <div className="rounded-2xl p-6 bg-white dark:bg-[#2d2d2f] shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(0,0,0,0.2)]">
-                    <label className="flex items-center text-lg mb-3 text-gray-800 dark:text-white">
-                      <Code2 className="mr-2" /> ReadyAgentOne Framework
-                    </label>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-
-                      ReadyAgentOne is a framework intended to be integrated at both a game and agent level to enable an agent to consume and meaningfully respond to in-game world events.<br />
-                      It sits on top of the agent layer and serves as an additional action space to enable the agent to respond to events from a game's authority.<br />
-                      In the framework we define a set of modifiable and extendible events as well as callbacks for the events that are easily integrable into existing Javascript agent frameworks.
-                      <div className="flex space-x-4 justify-around  mt-2">
-                        <a href="https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
-                          Github 🔗
-                        </a>
-                        <a href="https://www.npmjs.com/package/@0xspencer/ready-agent-one" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
-                          Npm 🔗
-                        </a>
-                      </div>
-
-                    </p>
-                  </div>
-                </div>
+                <Card icon={Code2} title="ReadyAgentOne Framework" links={[
+                  { href: "https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node", label: "Github" },
+                  { href: "https://www.npmjs.com/package/@0xspencer/ready-agent-one", label: "Npm" },
+                ]}>
+                  ReadyAgentOne is a framework intended to be integrated at both a game and agent level to enable an agent to consume and meaningfully respond to in-game world events.<br />
+                  It sits on top of the agent layer and serves as an additional action space to enable the agent to respond to events from a game's authority.<br />
+                  In the framework we define a set of modifiable and extendible events as well as callbacks for the events that are easily integrable into existing Javascript agent frameworks.
+                </Card>
               </MouseParallaxChild>
 
               <MouseParallaxChild factorX={parallaxClose} factorY={parallaxMid} className="relative translate-y-6">
-                <div className="relative   playful-hover">
-
-                  <div className="rounded-2xl p-6 bg-white dark:bg-[#2d2d2f] shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(0,0,0,0.2)]">
-                    <label className="flex items-center text-lg mb-3 text-gray-800 dark:text-white">
-                      <Code2 className="mr-2" /> Powered by
-                    </label>
-                    <div className="flex space-x-4 justify-around  mt-2">
-                      {poweredBy.map((item, index) => (
-                        <div key={index} className="relative group">
-                          <a className="flex flex-col items-center playful-hover-small" href={item.link} target="_blank" rel="noopener noreferrer">
-                            <img src={item.logo} alt={item.title} className="h-12 w-auto" />
-                            <p>{item.title}</p>
-                          </a>
-                          {item.tooltip && (
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                              {item.tooltip}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                <Card icon={Zap} title="Powered by" links={[]} >
+                  <div className="flex space-x-4 justify-around">
+                    {poweredBy.map((item, index) => (
+                      <div key={index} className="relative group">
+                        <a className="flex flex-col items-center playful-hover-small" href={item.link} target="_blank" rel="noopener noreferrer">
+                          <img src={item.logo} alt={item.title} className="h-12 w-auto" />
+                          <p>{item.title}</p>
+                        </a>
+                        {item.tooltip && (
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                            {item.tooltip}
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                </div>
+                </Card>
               </MouseParallaxChild>
             </motion.div>
 
