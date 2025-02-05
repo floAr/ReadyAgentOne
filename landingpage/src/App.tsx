@@ -5,11 +5,19 @@ import { Bot, Code2 } from 'lucide-react';
 
 import imgUrl from './agent.png';
 import backgroundUrl from './nifty.png';
+import { link } from 'framer-motion/client';
 
 function App() {
   const parallaxClose = 0.01;
   const parallaxMid = 0.015;
   const parallaxFar = 0.02;
+
+  const poweredBy = [
+    { title: "Base", logo: "https://ethglobal.b-cdn.net/organizations/h5ps8/square-logo/default.png", link: "https://www.base.org/", tooltip: "Base is a decentralized protocol for building and trading synthetic assets." },
+    { title: "Coinbase", logo: "https://ethglobal.b-cdn.net/organizations/rpi4f/square-logo/default.png", link: "https://docs.cdp.coinbase.com/agentkit/docs/welcome" },
+    { title: "Superfluid", logo: "https://explorer.superfluid.finance/superfluid-logo.svg", link: "" },
+    { title: "NiftyIsland", logo: "https://file.notion.so/f/f/5aadef8e-7e03-4a7f-a933-ab5fd2bd34e9/e45b9360-c30c-4ef9-9048-cb1b4d97d62f/Icon_-_Color_-_Nifty_Island.png?table=block&id=a9ecf914-f68e-4f6d-bf82-f7910af218da&spaceId=5aadef8e-7e03-4a7f-a933-ab5fd2bd34e9&expirationTimestamp=1738807200000&signature=gkvyhvBpiXkw5GH0uuZL2JMv3r5fj0OxzJ4Qh5_eoKw&downloadName=Icon+-+Color+-+Nifty+Island.png", link: "" },
+    { title: "The graph", logo: "https://ethglobal.b-cdn.net/organizations/pfyco/square-logo/default.png", link: "https://thegraph.com/", tooltip: "The graph is used to update " },]
 
   function ParallaxBackground() {
     const x = useMotionValue(0);
@@ -130,11 +138,21 @@ function App() {
                     <label className="flex items-center text-lg mb-3 text-gray-800 dark:text-white">
                       <Code2 className="mr-2" /> Powered by
                     </label>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                      Framework v2.5.0 active with enhanced decision matrices. Risk tolerance: moderate.
-                      Trading pairs: BTC/USD, ETH/USD, SOL/USD. Automated position management enabled.
-                      Maximum drawdown limit: 12%. Current market sentiment analysis: bullish.
-                    </p>
+                    <div className="flex space-x-4 justify-around  mt-2">
+                      {poweredBy.map((item, index) => (
+                        <div key={index} className="relative group">
+                          <a className="flex flex-col items-center playful-hover-small" href={item.link} target="_blank" rel="noopener noreferrer">
+                            <img src={item.logo} alt={item.title} className="h-12 w-auto" />
+                            <p>{item.title}</p>
+                          </a>
+                          {item.tooltip && (
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                              {item.tooltip}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </MouseParallaxChild>
