@@ -159,3 +159,132 @@ select {
 .playful-hover-small:hover {
     transform: translateY(-5px) scale(1.02);
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=EB+Garamond:wght@400;500&display=swap');
+
+@layer base {
+    body {
+        @apply bg-black;
+        background-image:
+            radial-gradient(circle at center, rgba(89, 0, 255, 0.1) 0%, rgba(0, 0, 0, 0.98) 100%),
+            url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&q=80');
+        background-size: cover;
+        background-attachment: fixed;
+    }
+}
+
+.ancient-border {
+    position: relative;
+    border: 2px solid #6b21a8;
+    background: rgba(9, 0, 23, 0.98);
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.2);
+}
+
+.ancient-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #6b21a8, #3b0764, #6b21a8);
+    z-index: -1;
+    opacity: 0.8;
+}
+
+.ancient-border::after {
+    content: '✧･ﾟ: *✧･ﾟ:*';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: #0a0118;
+    padding: 0 10px;
+    color: #9333ea;
+    font-size: 12px;
+}
+
+.scroll-texture {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%236b21a8' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.rune-text {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+}
+
+.ancient-text {
+    font-family: 'EB Garamond', serif;
+}
+
+.message-appear {
+    animation: messageAppear 0.4s ease-out forwards;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ancient-input {
+    background: rgba(9, 0, 23, 0.98);
+    border: 2px solid #6b21a8;
+    transition: all 0.3s ease;
+}
+
+.ancient-input:focus {
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+    border-color: #9333ea;
+}
+
+.ancient-button {
+    background: linear-gradient(to bottom, #6b21a8, #3b0764);
+    border: 2px solid #9333ea;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.ancient-button:hover {
+    background: linear-gradient(to bottom, #7c3aed, #4c1d95);
+    border-color: #a855f7;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(147, 51, 234, 0.4);
+}
+
+.ancient-button::before {
+    content: '•°*°•';
+    position: absolute;
+    left: 10px;
+    opacity: 0.5;
+    color: #d8b4fe;
+}
+
+.ancient-button::after {
+    content: '•°*°•';
+    position: absolute;
+    right: 10px;
+    opacity: 0.5;
+    color: #d8b4fe;
+}
+
+.terminal-ascii-art {
+    color: #9333ea;
+    opacity: 0.5;
+    font-size: 10px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    font-family: monospace;
+    white-space: pre;
+}

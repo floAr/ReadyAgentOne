@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { Send, Sparkles } from 'lucide-react';
-import { ChatMessage } from '../types';
+
 import ReactMarkdown from 'react-markdown';
+import { ChatMessage } from '../types/types';
 
 interface ChatWindowProps {
     messages: ChatMessage[];
@@ -36,21 +37,19 @@ export default function ChatWindow({ messages, onSendMessage }: ChatWindowProps)
                     AI Agent Interface
                 </h1>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map((message, index) => (
                     <div
                         key={index}
-                        className={`flex ${
-                            message.role === 'user' ? 'justify-end' : 'justify-start'
-                        }`}
+                        className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'
+                            }`}
                     >
                         <div
-                            className={`max-w-[70%] rounded-lg px-4 py-2 message-glow ${
-                                message.role === 'user'
+                            className={`max-w-[70%] rounded-lg px-4 py-2 message-glow ${message.role === 'user'
                                     ? 'bg-blue-600 bg-opacity-20 border border-blue-500'
                                     : 'bg-gray-800 bg-opacity-50 border border-gray-700'
-                            }`}
+                                }`}
                         >
                             {message.username && (
                                 <div className="text-sm text-blue-400 mb-1">

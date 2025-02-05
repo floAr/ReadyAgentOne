@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Scroll, Users, Sparkles, Book, Feather, Wand2, Crown, Terminal } from 'lucide-react';
-import { Player, PLAYER_ENTER_EVENT, PLAYER_EXIT_EVENT, PLAYER_WON_EVENT, GAME_COMPLETED_EVENT } from '../types';
+import { Player } from '../types/types';
+
 
 interface SidebarProps {
     endpoint: string;
@@ -31,7 +32,9 @@ export default function Sidebar({
     const wsRef = useRef<WebSocket | null>(null);
 
     useEffect(() => {
-        const wsEndpoint = endpoint.replace(/^http/, 'ws').replace(/\/readyagentone$/, '');
+        const wsEndpoint = endpoint
+            .replace(/^http(s)?:\/\//, (match, secure) => secure ? 'wss://' : 'ws://')
+            .replace(/\/readyagentone$/, '');
         wsRef.current = new WebSocket(wsEndpoint);
 
         wsRef.current.onmessage = (event) => {
@@ -119,7 +122,7 @@ export default function Sidebar({
                         value={endpoint}
                         onChange={(e) => onEndpointChange(e.target.value)}
                         className="w-full px-3 py-2 ancient-input text-purple-100 ancient-text"
-                        placeholder="http://localhost:3000/chat"
+                        placeholder="https://readyagentone-production.up.railway.app/readyagentone"
                     />
                 </div>
 

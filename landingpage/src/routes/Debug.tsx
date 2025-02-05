@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import Sidebar from './components/Sidebar';
-import ChatWindow from './components/ChatWindow';
-import { ChatMessage } from './types';
+import ChatWindow from '../components/ChatWindow';
+import { ChatMessage } from '../types/types';
+import Sidebar from '../components/Sidebar';
 
-function App() {
-  const [endpoint, setEndpoint] = useState('http://localhost:3000/readyagentone');
+
+function Debug() {
+  const [endpoint, setEndpoint] = useState('https://readyagentone-production.up.railway.app/readyagentone');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentPlayer, setCurrentPlayer] = useState({
     userId: '1',
@@ -85,4 +86,4 @@ function App() {
   );
 }
 
-export default App;
+export default Debug;
