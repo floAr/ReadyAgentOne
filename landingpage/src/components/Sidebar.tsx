@@ -12,14 +12,6 @@ interface SidebarProps {
     onPlayerChange: (player: Player) => void;
 }
 
-const MAGIC_ASCII_ART = `
-  .*・°☆.  .*・°☆.  .*・
- ╱|、      
-(˚ˎ 。7    
- |、˜〵          
- じしˍ,)ノ
-  °☆.  .*・°☆.  .*・°
-`;
 
 export default function Sidebar({
     endpoint,
