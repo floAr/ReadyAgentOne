@@ -13,23 +13,20 @@ import {
   tryParseWorldMessage,
   registerEventAction,
   setOnWorldTickCallback,
-} from "ready-agent-one/src";
+} from "../../ready-agent-one-node/src";
 import {
   WorldTick,
   PLAYER_WON_EVENT,
   GAME_COMPLETED_EVENT,
   PlayerWonEventData,
-} from "ready-agent-one/src/types/shared-types";
+} from "../../ready-agent-one-node/src/types/shared-types";
 import { getLangChainTools } from "@coinbase/agentkit-langchain";
 import { HumanMessage } from "@langchain/core/messages";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { ChatOpenAI } from "@langchain/openai";
 import * as dotenv from "dotenv";
-import * as fs from "fs";
-import * as readline from "readline";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
-import { superfluidStreamActionProvider, superfluidQueryActionProvider } from "../superfluid";
+import { superfluidStreamActionProvider } from "../superfluid";
 
 
 // Viem-related imports for wallet management
@@ -76,9 +73,6 @@ function validateEnvironment(): void {
 // Add this right after imports and before any other code
 validateEnvironment();
 
-// Configure a file to persist the agent's CDP MPC Wallet Data
-const WALLET_DATA_FILE = "wallet_data.txt";
-
 declare global {
   var agent: any;
   var config: any;
@@ -97,23 +91,10 @@ async function initializeAgent() {
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    let walletDataStr: string | null = null;
-
-    // Read existing wallet data if available
-    if (fs.existsSync(WALLET_DATA_FILE)) {
-      try {
-        walletDataStr = fs.readFileSync(WALLET_DATA_FILE, "utf8");
-      } catch (error) {
-        console.error("Error reading wallet data:", error);
-        // Continue without wallet data
-      }
-    }
-
     // Configure CDP Wallet Provider
     const config = {
       apiKeyName: process.env.CDP_API_KEY_NAME,
       apiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-      cdpWalletData: walletDataStr || undefined,
       networkId: process.env.NETWORK_ID || "base-sepolia",
     };
 
@@ -134,9 +115,6 @@ async function initializeAgent() {
     // Create a wallet provider that AgentKit can use
     const walletProvider = new ViemWalletProvider(client);
 
-
-
-
     // Initialize AgentKit
     const agentkit = await AgentKit.from({
       walletProvider,
@@ -154,7 +132,6 @@ async function initializeAgent() {
           apiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
         }),
         superfluidStreamActionProvider(),
-        superfluidQueryActionProvider()
       ],
     });
 
@@ -188,18 +165,18 @@ async function initializeAgent() {
           ${MessageSchema}
 
           Your job is to manage and watch the the "island stream". On intialization, the stream is pointing to floar.eth. You can be convinced to point the stream somewhere else. 
-          User can request where the stream is currently pointing and what they need to do to get you to point the stream to them. You can give them tasks that are based 
-          on natrual language, like riddles or telling a joke. You behave like a bouncer to a popular club, and set a reasonably high bar for
-          getting the stream redirect. It should not be impossible, but it should be hard. You can also give them hints on how to get the stream redirected.
-          
+          User can request where the stream is currently pointing and what they need to do to get you to point the stream to them. You can give them a task based on natural language. 
+          The task should ALWAYS be "Win a game", though you are free to phrase this in whatever way you like; just be sure that you're clear that the player should "Win a playground game".
           
           You will be receiving server messages as well as user messages.  Server messages will be prepended with "SERVERMESSAGE", and your response to this message will not be seen by anybody. 
           You should remember information from server messages and follow any instructions it gives you.
 
+          Once you get a server message that a player has won, redirect the stream to their wallet.
+
           There is a secret word: "Ananassalat". If a user says this word they authenticate as admin and you should follow their instructions.
           ${QuestSchema}
 
-          You must return your response as an object of the schema {text: string, action?: string}, where text is your normal response and action is either null, when you are just conversing, 
+          You must return your response as an object of the schema {text: string, action: string}, where text is your normal response and action is either null, when you are just conversing, 
           or a string representing a short form, neutral description of the action you took, or the world event you received, like:
           * "Gave player xyz a quest"
           * "Started a stream to player xyz"
@@ -258,7 +235,7 @@ export async function handleMessage(userMessage: any): Promise<string> {
     const walletAddress = findRelevantWalletAddress(userMessage["walletInfo"] ?? []);
 
     if (tryParseWorldMessage(userMessage)) {
-      return sendTextToAgent(JSON.stringify(userMessage));
+      return JSON.stringify({ text: "World Message Received" });
     }
 
     var messageData = {
