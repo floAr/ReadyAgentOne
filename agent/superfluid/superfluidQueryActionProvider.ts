@@ -40,14 +40,10 @@ It returns an array of account outflows, each with a receiver (wallet address), 
         try {
 
             const accountData = await getAccountOutflow(walletProvider.getAddress())
-            console.log('done!!!')
-            console.log(JSON.stringify(accountData))
             const outflows = accountData?.accounts?.length ? accountData?.accounts[0].outflows : [];
-            console.log(outflows)
             const activeOutflows = outflows.filter(o => {
                 return parseInt(o.currentFlowRate) > 0;
             });
-            console.log(JSON.stringify(activeOutflows))
 
             return `Current outflows are ${JSON.stringify(activeOutflows)}`;
         } catch (error) {
