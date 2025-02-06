@@ -7,6 +7,7 @@ import imgUrl from '@content/agent.png';
 import backgroundUrl from '@content/nifty.png';
 import { link } from 'framer-motion/client';
 import Card from '../components/Card';
+import AvatarViewer from '../components/AvatarViewer';
 
 function Landing() {
   const parallaxClose = 0.01;
@@ -161,23 +162,17 @@ Initiating position scaling strategy...`}
             </motion.div>
           </div>
         </div>
-
-        {/* Agent image positioned globally */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           className="fixed bottom-0 inset-x-0 flex justify-center pointer-events-none z-10 "
         >
-          <MouseParallaxChild factorX={-parallaxClose} factorY={-parallaxClose} className="relative -translate-y-6 left-10 top-4">
-            <img
-              src={imgUrl}
-              alt="Agent Character"
-              className="h-[65vh] w-auto object-contain filter drop-shadow-[0_0_20px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-            />
+          <MouseParallaxChild factorX={-parallaxClose} factorY={-parallaxClose}>
+            <AvatarViewer modelPath="/models/yp.fbx" />
           </MouseParallaxChild>
         </motion.div>
-        {/* Background image with gradient overlay */}
       </MouseParallaxContainer >
+      
     </div >
   );
 }
