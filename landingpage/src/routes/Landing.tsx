@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MouseParallaxContainer, MouseParallaxChild } from 'react-parallax-mouse';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { Bot, Code2, Zap } from 'lucide-react';
@@ -8,6 +8,8 @@ import backgroundUrl from '@content/nifty.png';
 import { link } from 'framer-motion/client';
 import Card from '../components/Card';
 import AvatarViewer from '../components/AvatarViewer';
+import WebSocketComponent from '../components/WebSocket';
+import { initializeWebSocket } from '../utils/webSocketUtils';
 
 function Landing() {
   const parallaxClose = 0.01;
@@ -20,6 +22,8 @@ function Landing() {
     { title: "Superfluid", logo: "https://explorer.superfluid.finance/superfluid-logo.svg", link: "" },
     { title: "NiftyIsland", logo: "https://file.notion.so/f/f/5aadef8e-7e03-4a7f-a933-ab5fd2bd34e9/e45b9360-c30c-4ef9-9048-cb1b4d97d62f/Icon_-_Color_-_Nifty_Island.png?table=block&id=a9ecf914-f68e-4f6d-bf82-f7910af218da&spaceId=5aadef8e-7e03-4a7f-a933-ab5fd2bd34e9&expirationTimestamp=1738807200000&signature=gkvyhvBpiXkw5GH0uuZL2JMv3r5fj0OxzJ4Qh5_eoKw&downloadName=Icon+-+Color+-+Nifty+Island.png", link: "" },
     { title: "The graph", logo: "https://ethglobal.b-cdn.net/organizations/pfyco/square-logo/default.png", link: "https://thegraph.com/", tooltip: "The graph is used to update " },]
+
+
 
   function ParallaxBackground() {
     const x = useMotionValue(0);
@@ -137,25 +141,8 @@ function Landing() {
               <MouseParallaxChild factorX={parallaxClose} factorY={parallaxClose} className="relative -translate-y-6">
                 <div className="rounded-2xl p-6 bg-white dark:bg-[#2d2d2f] shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(0,0,0,0.2)] h-[600px] overflow-y-auto">
                   <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Thought Stream</h3>
-                  <div className="space-y-4">
-                    {[1, 2, 3].map((_, index) => (
-                      <div className=' playful-hover-small'>
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="rounded-xl p-4 bg-gray-50 dark:bg-[#3d3d3f] "
-                        >
-                          <pre className="whitespace-pre-wrap font-mono text-sm text-gray-600 dark:text-gray-300 ">
-                            {`[${new Date().toISOString()}] Analyzing market conditions...
-Market volatility index: 23.5
-Support level identified at $42,850
-Resistance zone detected between $44,200 - $44,500
-Initiating position scaling strategy...`}
-                          </pre>
-                        </motion.div>
-                      </div>
-                    ))}
+                  <div className="space-y-4  h-[500px]">
+                    <WebSocketComponent endpoint={"https://readyagentone-production.up.railway.app/readyagentone"} />
                   </div>
                 </div>
               </MouseParallaxChild>
@@ -165,14 +152,19 @@ Initiating position scaling strategy...`}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-0 inset-x-0 flex justify-center pointer-events-none z-10 "
+          className="fixed bottom-0 inset-x-0 flex justify-center pointer-events-none z-10 h-[65vh]"
         >
           <MouseParallaxChild factorX={-parallaxClose} factorY={-parallaxClose}>
-            <AvatarViewer modelPath="/models/yp.fbx" />
+            {/* <AvatarViewer modelPath="/models/yp.fbx" /> */}
+            <img
+              src={imgUrl}
+              alt="Agent Character"
+              className="h-[65vh] w-auto object-contain filter drop-shadow-[0_0_20px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            />
           </MouseParallaxChild>
         </motion.div>
       </MouseParallaxContainer >
-      
+
     </div >
   );
 }
