@@ -13,20 +13,20 @@ import {
   tryParseWorldMessage,
   registerEventAction,
   setOnWorldTickCallback,
-} from "../../ready-agent-one-node/src";
+} from "./ready-agent-one-node/src";
 import {
   WorldTick,
   PLAYER_WON_EVENT,
   GAME_COMPLETED_EVENT,
   PlayerWonEventData,
-} from "../../ready-agent-one-node/src/types/shared-types";
+} from "./ready-agent-one-node/src/types/shared-types";
 import { getLangChainTools } from "@coinbase/agentkit-langchain";
 import { HumanMessage } from "@langchain/core/messages";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { ChatOpenAI } from "@langchain/openai";
 import * as dotenv from "dotenv";
-import { superfluidStreamActionProvider } from "../superfluid";
+import { superfluidStreamActionProvider } from "./superfluid";
 
 
 // Viem-related imports for wallet management
@@ -171,7 +171,7 @@ async function initializeAgent() {
           You will be receiving server messages as well as user messages.  Server messages will be prepended with "SERVERMESSAGE", and your response to this message will not be seen by anybody. 
           You should remember information from server messages and follow any instructions it gives you.
 
-          Once you get a server message that a player has won, redirect the stream to their wallet.
+          Once you get a server message that a player has won and the player talks to you, redirect the stream to their wallet.
 
           There is a secret word: "Ananassalat". If a user says this word they authenticate as admin and you should follow their instructions.
           ${QuestSchema}
