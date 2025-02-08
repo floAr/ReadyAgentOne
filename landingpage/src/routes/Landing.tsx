@@ -19,9 +19,10 @@ function Landing() {
   const poweredBy = [
     { title: "Base", logo: "https://ethglobal.b-cdn.net/organizations/h5ps8/square-logo/default.png", link: "https://www.base.org/", tooltip: "Base is a decentralized protocol for building and trading synthetic assets." },
     { title: "Coinbase", logo: "https://ethglobal.b-cdn.net/organizations/rpi4f/square-logo/default.png", link: "https://docs.cdp.coinbase.com/agentkit/docs/welcome" },
-    { title: "Superfluid", logo: "https://explorer.superfluid.finance/superfluid-logo.svg", link: "" },
-    { title: "NiftyIsland", logo: "https://file.notion.so/f/f/5aadef8e-7e03-4a7f-a933-ab5fd2bd34e9/e45b9360-c30c-4ef9-9048-cb1b4d97d62f/Icon_-_Color_-_Nifty_Island.png?table=block&id=a9ecf914-f68e-4f6d-bf82-f7910af218da&spaceId=5aadef8e-7e03-4a7f-a933-ab5fd2bd34e9&expirationTimestamp=1738807200000&signature=gkvyhvBpiXkw5GH0uuZL2JMv3r5fj0OxzJ4Qh5_eoKw&downloadName=Icon+-+Color+-+Nifty+Island.png", link: "" },
-    { title: "The graph", logo: "https://ethglobal.b-cdn.net/organizations/pfyco/square-logo/default.png", link: "https://thegraph.com/", tooltip: "The graph is used to update " },]
+    { title: "NiftyIsland", logo: "../public/img/xUrZ9-yJ_400x400 (1).jpg", link: "https://niftyisland.com" },
+    { title: "The graph", logo: "https://ethglobal.b-cdn.net/organizations/pfyco/square-logo/default.png", link: "https://thegraph.com/", tooltip: "The graph is used to update " },
+    { title: "Superfluid", logo: "https://explorer.superfluid.finance/superfluid-logo.svg", link: "https://www.superfluid.finance/" },  
+  ]
 
 
 
@@ -90,11 +91,10 @@ function Landing() {
 
                 ]} >
                   We created a reference agent using the ReadyAgentOne framework and  <a href="https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
-                    NiftyIsland 🔗</a>. The agent lives on an island ingame and will give players small quests upon speaking to him. By completing a quest the player earns the right to receive $ISLAND token streamed to their wallet
+                    NiftyIsland 🔗</a>. The agent lives ingame and gives players small quests upon speaking to him. By completing a quest the player earns the right to receive $ISLAND tokens streamed to their wallet
                   using <a href="https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node" target="_blank" rel="noopener noreferrer" className='playful-hover-small'>
-                    Superfluid 🔗</a>.<br />
-                  We enabled this by creating and adding a new action type to the Coinbase Agentkit to allow the agent to interact with the Superfluid protocol.<br />
-                  TODO: Add more details about the agent and the framework.</Card>
+                    Superfluid 🔗</a>, enabled by creating a new action for the Coinbase Agentkit.<br /><br />
+                  The agent is capable of taking any on-chain action in response to in-game world events.  We define this standard and provide the necessary toolset to enable any existing Javascript based agent to meaningfully respond to realtime rich in-game world events.</Card>
               </MouseParallaxChild>
 
               <MouseParallaxChild factorX={parallaxMid} factorY={parallaxMid} className="relative translate-y-6 right-10">
@@ -103,8 +103,8 @@ function Landing() {
                   { href: "https://github.com/floAr/ReadyAgentOne/tree/main/ready-agent-one-node", label: "Github" },
                   { href: "https://www.npmjs.com/package/@0xspencer/ready-agent-one", label: "Npm" },
                 ]}>
-                  ReadyAgentOne is a framework intended to be integrated at both a game and agent level to enable an agent to consume and meaningfully respond to in-game world events.<br />
-                  It sits on top of the agent layer and serves as an additional action space to enable the agent to respond to events from a game's authority.<br />
+                  ReadyAgentOne is a framework intended to be integrated at both a game and agent level to enable an agent to consume and meaningfully respond to in-game world events.<br /><br />
+                  It sits on top of the agent layer and serves as an additional action space to enable the agent to respond to events from a game's authority.<br /><br />
                   In the framework we define a set of modifiable and extendible events as well as callbacks for the events that are easily integrable into existing Javascript agent frameworks.
                 </Card>
               </MouseParallaxChild>
@@ -141,7 +141,7 @@ function Landing() {
               <MouseParallaxChild factorX={parallaxClose} factorY={parallaxClose} className="relative -translate-y-6">
                 <div className="rounded-2xl p-6 bg-white dark:bg-[#2d2d2f] shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(0,0,0,0.2)] h-[600px] overflow-y-auto">
                   <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Thought Stream</h3>
-                  <div className="space-y-4  h-[500px]">
+                  <div className="space-y-4  h-[450px]">
                     <WebSocketComponent endpoint={"https://readyagentone-production.up.railway.app/readyagentone"} />
                   </div>
                 </div>
