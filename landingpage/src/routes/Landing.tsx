@@ -19,11 +19,11 @@ function Landing() {
   const parallaxFar = 0.02;
 
   const poweredBy = [
-    { title: "Base", logo: "https://ethglobal.b-cdn.net/organizations/h5ps8/square-logo/default.png", link: "https://www.base.org/", tooltip: "Base is a decentralized protocol for building and trading synthetic assets." },
+    { title: "Base", logo: "https://ethglobal.b-cdn.net/organizations/h5ps8/square-logo/default.png", link: "https://www.base.org/" },
     { title: "Coinbase", logo: "https://ethglobal.b-cdn.net/organizations/rpi4f/square-logo/default.png", link: "https://docs.cdp.coinbase.com/agentkit/docs/welcome" },
     { title: "NiftyIsland", logo: logoUrl, link: "https://niftyisland.com" },
     { title: "The graph", logo: "https://ethglobal.b-cdn.net/organizations/pfyco/square-logo/default.png", link: "https://thegraph.com/" },
-    { title: "Superfluid", logo: superfluidLogo, link: "https://www.superfluid.finance/" },  
+    { title: "Superfluid", logo: superfluidLogo, link: "https://www.superfluid.finance/" },
   ]
 
 
