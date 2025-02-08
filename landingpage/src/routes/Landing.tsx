@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { Bot, Code2, Zap } from 'lucide-react';
 
 import imgUrl from '@content/agent.png';
+import logoUrl from '@content/niftyLogo.jpg'
 import backgroundUrl from '@content/nifty.png';
 import { link } from 'framer-motion/client';
 import Card from '../components/Card';
@@ -19,7 +20,7 @@ function Landing() {
   const poweredBy = [
     { title: "Base", logo: "https://ethglobal.b-cdn.net/organizations/h5ps8/square-logo/default.png", link: "https://www.base.org/", tooltip: "Base is a decentralized protocol for building and trading synthetic assets." },
     { title: "Coinbase", logo: "https://ethglobal.b-cdn.net/organizations/rpi4f/square-logo/default.png", link: "https://docs.cdp.coinbase.com/agentkit/docs/welcome" },
-    { title: "NiftyIsland", logo: "../public/img/xUrZ9-yJ_400x400 (1).jpg", link: "https://niftyisland.com" },
+    { title: "NiftyIsland", logo: logoUrl, link: "https://niftyisland.com" },
     { title: "The graph", logo: "https://ethglobal.b-cdn.net/organizations/pfyco/square-logo/default.png", link: "https://thegraph.com/", tooltip: "The graph is used to update " },
     { title: "Superfluid", logo: "https://explorer.superfluid.finance/superfluid-logo.svg", link: "https://www.superfluid.finance/" },  
   ]
